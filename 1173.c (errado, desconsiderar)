@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+int main()
+{
+    int V, I;
+    scanf("%d", &V);
+    char Vetor[20];
+    for(I = 0; I<20; I++){
+        if(I>0){
+            Vetor[I] = Vetor[(I-1)] * 2;
+        } else{
+            Vetor[I] = V;
+        }
+        printf("N[%d] = %d\n", I, Vetor[I]);
+    }
+    
+    return 0;
+}
