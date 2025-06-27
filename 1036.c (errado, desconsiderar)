@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include <math.h>
+
+int main()
+{
+    double A, B, C, D, R, S;
+    scanf("%lf", &A);
+    scanf("%lf", &B);
+    scanf("%lf", &C);
+    if(A != 0){
+        D = B*B - 4 * A * C;
+        if(D < 0){
+            printf("Impossivel calcular\n");
+        } else{
+            R = (B * (-1) + sqrt(D)) / 2 * A;
+            S = (B * (-1) - sqrt(D)) / 2 * A;
+            printf("R1 = %lf\nR2 = %lf\n", R, S);
+        }
+    }
+    
+    return 0;
+}
