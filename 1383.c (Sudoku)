@@ -1,0 +1,96 @@
+#include <stdio.h>
+
+#define SIZE 9
+
+// Função para verificar se uma linha contém números únicos de 1 a 9
+int check_line(int board[SIZE][SIZE], int row) {
+    int seen[SIZE] = {0};
+    for (int i = 0; i < SIZE; i++) {
+        if (board[row][i] < 1 || board[row][i] > SIZE || seen[board[row][i] - 1]) {
+            return 0;  // Se o número for fora do intervalo ou já visto
+        }
+        seen[board[row][i] - 1] = 1;  // Marca o número como visto
+    }
+    return 1;
+}
+
+// Função para verificar se uma coluna contém números únicos de 1 a 9
+int check_column(int board[SIZE][SIZE], int col) {
+    int seen[SIZE] = {0};
+    for (int i = 0; i < SIZE; i++) {
+        if (board[i][col] < 1 || board[i][col] > SIZE || seen[board[i][col] - 1]) {
+            return 0;  // Se o número for fora do intervalo ou já visto
+        }
+        seen[board[i][col] - 1] = 1;  // Marca o número como visto
+    }
+    return 1;
+}
+
+// Função para verificar se uma subgrade 3x3 contém números únicos de 1 a 9
+int check_subgrid(int board[SIZE][SIZE], int startRow, int startCol) {
+    int seen[SIZE] = {0};
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            int num = board[startRow + i][startCol + j];
+            if (num < 1 || num > SIZE || seen[num - 1]) {
+                return 0;  // Se o número for fora do intervalo ou já visto
+            }
+            seen[num - 1] = 1;  // Marca o número como visto
+        }
+    }
+    return 1;
+}
+
+int is_valid_sudoku(int board[SIZE][SIZE]) {
+    // Verifica todas as linhas
+    for (int i = 0; i < SIZE; i++) {
+        if (!check_line(board, i)) {
+            return 0;
+        }
+    }
+
+    // Verifica todas as colunas
+    for (int i = 0; i < SIZE; i++) {
+        if (!check_column(board, i)) {
+            return 0;
+        }
+    }
+
+    // Verifica todas as subgrades 3x3
+    for (int i = 0; i < SIZE; i += 3) {
+        for (int j = 0; j < SIZE; j += 3) {
+            if (!check_subgrid(board, i, j)) {
+                return 0;
+            }
+        }
+    }
+
+    return 1;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);  // Lê o número de matrizes
+
+    for (int k = 1; k <= t; k++) {
+        int board[SIZE][SIZE];
+
+        // Lê a matriz
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                scanf("%d", &board[i][j]);
+            }
+        }
+
+        // Verifica se a matriz é uma solução válida de Sudoku
+        printf("Instancia %d\n", k);
+        if (is_valid_sudoku(board)) {
+            printf("SIM\n");
+        } else {
+            printf("NAO\n");
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
